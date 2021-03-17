@@ -183,9 +183,47 @@ Next we show the variance of independent random variables is additive:
 	&= Var[x] + Var[y] &\blacksquare
 \end{align*}
 
+\item
+
+\item We want to show that $\E[x_n x_m] = \mu^2 + \delta_{nm}\sigma^2$ where the $x$'s are sample from a Gaussian distribution.
+
+Case: $x_n = x_m$. Then $\E[x_n x_m] = \E[x_n^2]$ which is the second moment of the Gaussian, $\mu^2 + \sigma^2$ (see problem 8).
+
+Case: $x_n \neq x_m$. Samples were drawn independently so the expectation factors: $\E[x_nx_m] = \E[x_n]\E[x_m] = \mu^2$.
+
+Next we want to show that $\E[\mu_{ML}] = \mu$. Since each $x_i$ has an expectation $\mu$, and expectation is linear we have:
+
+$$\E[\mu_{ML}] = \E \frac{1}{N}\sum_{n=1}^N x_n = \frac{1}{N}\sum_{n=1}^N \E[x_n] = \frac{1}{N}N\mu = \mu$$ 
+
+Last we want to show that $\E[\sigma^2_{ML}] = \frac{N-1}{N}\sigma^2$. Expanding shows
+\begin{align*}
+	\E[\sigma^2_{ML}] &= \frac{1}{N}\sum_{n=1}^N \E\left[(x_n - \mu_{ML})^2\right] &\\
+	&= \frac{1}{N}\sum_{n=1}^N \E\left[x_n^2 - 2x_n\mu_{ML} + (\mu_{ML})^2\right] &\\
+\end{align*}
+
+Using linearity we'll compute each term in the expectation. The the first term is $\E[x_n^2] = \mu^2 + \sigma^2$. In summation we'll have $N$ of these terms:
+
+$$\frac{1}{N}\sum_{n=1}^N \E[x_n^2] = \frac{1}{N}\sum_{n=1}^N \mu^2 + \sigma^2 = \frac{1}{N}N(\mu^2 + \sigma^2) = \mu^2 + \sigma^2$$
+
+The second term is
+$$\E[2x_n \mu_{ML}] = 2\E\left[x_n \frac{1}{N}\sum_{m=1}^N x_m\right] = \frac{2}{N}\sum_{m=1}^N(\mu^2 + \delta_{nm}\sigma^2)$$
+
+Applying the outer summation gives
+$$\frac{1}{N}\sum_{n=1}^N \left(\frac{2}{N}\sum_{m=1}^N(\mu^2 + \delta_{nm}\sigma^2)\right)$$
+
+Overall we have $N^2$ terms in summation. We have $n=m$ precisely $N$ times, contributing $N(\mu^2 + \sigma^2)$ to the sum. For the remaining $N(N-1)$ summands $n \neq m$ hence their contribution is $\mu^2$. Altogether this equals:
+$$\frac{2}{N^2}\left(N(\mu^2 + \sigma^2) + N(N-1)\mu^2\right) = 2\left(\frac{N(N-1) + N}{N^2}\mu^2 + \frac{N}{N^2}\sigma^2\right)$$
+$$=2\left(\mu^2 +\frac{\sigma^2}{N}\right)$$
+
+By similar counting we can examine the last term:
+$$\frac{1}{N} \sum_{n=1}^N \E[\mu_{ML}^2] = \frac{1}{N}\sum_{n=1}^N \E\left[\frac{1}{N}\left(\sum_i^N\sum_j^Nx_i x_j\right)\right]$$
+
+The double summation on the inside will yield $\mu^2 + \sigma^2$ precisely $N$ times, and $\mu^2$ the remaining $N(N-1)$ times. So this is the same as the previous term without the factor of 2. 
+
+Putting together the terms we get
+
+$$\E[\mu_{ML}] = \mu^2 + \sigma^2 - 2\left(\mu^2 + \frac{\sigma^2}{N}\right) +\left(\mu^2 + \frac{\sigma^2}{N}\right) = \sigma^2 - \frac{\sigma^2}{N}$$
+$$=\frac{N - 1}{N}\sigma^2
+
 \end{enumerate}
-
-
-
-
 \end{document}
