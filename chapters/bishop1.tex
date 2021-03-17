@@ -144,6 +144,44 @@ To get the second moment of the gaussian $\mathbb{E}[x^2]$, we can expand the va
 \implies \sigma^2 + \mu^2 &= \mathbb{E}[x^2]
 \end{align*}
 
+\item Show that the mode of $p \sim \mathcal{N}(\mu, \sigma^2)$ is $\mu$. The mode is precisely where the density reaches its maximum: the argmax of $p(x)$
+
+\begin{align*}
+	x = 1&&\\
+	\arg \max_x \mathcal{N}(\mu, \sigma^2) &= \arg \max_x \log \mathcal{N}(\mu, \sigma^2) &\text{log is order-preserving}\\
+	&= \arg \max_x \log\left(\frac{1}{\sqrt{2\pi}}\right) - \frac{1}{2\sigma^2}(x-\mu)^2 &\\
+\end{align*}
+
+Examining the above, we see that whenever $x \neq \mu$, the second term will be nonzero and positive; so subtracting it will lower the value of the expression. Hence the $x$ that maximizes the value is $x = \mu$. 
+
+Likewise we can seek the argmax of the MVN:
+\begin{align*}
+	\arg \max_{\mathbf{x}} \mathcal{N}(\mathbf{\mu}, \Sigma) &= \arg \max_{\mathbf{x}} \log \mathcal{N}(\mathbf{\mu}, \Sigma) &\\
+	&= \arg \max_{\mathbf{x}} \log\left(\frac{1}{(2\pi)^{D/2}|\Sigma|^{1/2}}\right) - \frac{1}{2}(x-\mathbf{\mu})^\top \Sigma^{-1}(x-\mathbf{\mu})
+\end{align*}
+
+Knowing that the covariance matrix $\Sigma$ and its inverse are positive semidefinite, we can again characterize the density as decreasing in $||x - \mathbf{\mu}||$. Thus the $x$ that maximizes the value of the function is the one that zeros out the second term, that is when $x = \mathbf{\mu}$
+
+\item Show that $\mathbb{E}[x + z] = \mathbb{E}[x] + \mathbb{E}[z]$ if $x$ and $z$ are independent. Of course this is true even if they are dependent by the linearity of expectation. 
+
+We can also show this with integrals:
+\begin{align*}	\mathbb{E}[x + z] &= \int\limits_{supp \ x,z}(x + z)p_{x, z}(x, z) \ dx \ dz &\\
+&=\int\limits_{supp \ x, z} (x + z)p_x(x)p_z(z) \ dx \ dz &\text{using independence}\\
+&=\int\limits_{supp \ x, z} x p_x(x)p_z(z) \ dx \ dz + \int\limits_{supp \ x, z}z p_x(x)p_z(z) \ dx \ dz &\text{linearity of integral}\\
+&= \int\limits_{supp \ x} \int\limits_{supp \ z} xp_x(x)p_z(z) \ dx \ dz + \int\limits_{supp \ x} \int\limits_{supp \ z} z p_x(x) p_z(z)\ dx \ dz &\\
+&= \int\limits_{supp \ x} x p_x(x) \ dx \int\limits_{supp \ z} p_z(z) \ dz + \int\limits_{supp \ x} p_x(x) \ dx \int\limits_{supp \ z} z p_z(z) \ dz &\\
+&= \int\limits_{supp \ x} x p_x(x) \ dx + \int\limits_{supp \ z} z p_z(z) \ dz &\text{pdf's integrate to 1}\\
+&= \mathbb{E}[x] + \mathbb{E}[z] & \blacksquare
+\end{align*}
+
+Next we show the variance of independent random variables is additive:
+\begin{align*}
+	Var[x + z] &= \E[(x + z)^2] - \E[x + z]^2 &\text{by def.}\\
+	&=\E[x^2 + 2xz + z^2] - \left(\E[x] + \E[z]\right)^2 &\text{expand}\\
+	&=\E[x^2] - \E[x]^2 + \E[z^2] - \E[y]^2 + 2(\E[xz] - \E[x]\E[z]) &\\
+	&=Var[x] + Var[y] + 2(\E[x]\E[z] - \E[x]\E[z]) &\text{indep. $\implies \ \E$ factors}\\
+	&= Var[x] + Var[y] &\blacksquare
+\end{align*}
 
 \end{enumerate}
 
