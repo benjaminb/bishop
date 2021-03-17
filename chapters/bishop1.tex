@@ -101,6 +101,49 @@ $$I = \sqrt{I^2} = \sqrt{2\pi \sigma^2}$$
 
 Hence, dividing by this amount will make the density integrate to 1, giving a valid probability density function.
 
+To show $\mathcal{N}(\mu, \sigma^2)$ is normalized, consider the change of variable $y = x - \mu$. Then $dy = dx$. Hence 
+$$\frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathcal{R} \exp(-\frac{1}{2\sigma^2}(x - \mu)^2 )\ dx = \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathcal{R} \exp(-\frac{1}{2\sigma^2}y^2) \ dy$$
+$$ = \frac{1}{\sqrt{2\pi \sigma^2}}\sqrt{2\pi\sigma^2} = 1$$
+
+\item We want to show the expectation of a normal distribution $\mathbb{E}(\mathcal{N}(\mu, \sigma^2) ) = \mu$. By definition we have
+$$\mathbb{E}(\mathcal{N}(\mu, \sigma^2)) = \frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^{\infty} \exp\left(-\frac{1}{2\sigma^2}(x - \mu)^2\right) x \ dx$$
+
+Substitute $y = x - \mu$ to simplify the exponential, then $x = y + \mu$ and we have
+$$\mathbb{E}(\mathcal{N}(\mu, \sigma^2)) = 
+\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^{\infty} \exp\left(-\frac{1}{2\sigma^2}y^2\right) (y + \mu) \ dy$$
+
+By the linearity of the integral we can distribute across $y + u$:
+$$=
+\left(\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^{\infty} \exp\left(-\frac{1}{2\sigma^2}y^2\right)y  \ dy\right) + \left(\frac{1}{\sqrt{2\pi\sigma^2}}\int_{-\infty}^{\infty} \exp\left(-\frac{1}{2\sigma^2}y^2\right)\mu  \ dy \right)
+$$
+
+I claim the term on the left is 0: the exponential factor in the integrand is even, since it is symmetric about 0, but the $y$ factor is odd. Hence, the $y$ positive interval of the integral cancels out the $y$ negative interval and it integrates to 0.
+
+The integral on the right is simply $\mu$, since $\mu$ is constant with respect to $dy$ we can pull it outside the integral, and what's left is the density function for a normal distribution which integrates to 1.
+
+To get the variance of the gaussian, we set
+$$\frac{d}{d\sigma^2}\int_\mathbb{R} \exp(-\frac{1}{2}(x-\mu)^2(\sigma^2)^{-1}) \ dx = \frac{d}{d\sigma^2}\sqrt{2\pi}(\sigma^2)^{1/2}$$
+
+Since all partials of the integrand exist, we can consider the integral a limit as the lower and upper limits approach $\pm \infty$ and apply Leibniz' rule, to push the derivative inside:
+$$\int_\mathbb{R} \frac{\partial}{\partial \sigma^2}
+\exp(-\frac{1}{2}(x-\mu)^2(\sigma^2)^{-1}) \ dx = \sqrt{2\pi}\left(\frac{1}{2}\right)(\sigma^2)^{-1/2}$$
+$$\int_\mathbb{R} \exp\left(-\frac{1}{2\sigma^2}(x - \mu)^2\right)\left(-\frac{1}{2}\right)(x-\mu)^2(-1)(\sigma^2)^{-2} \ dx = \frac{\sqrt{2\pi}}{2\sigma}$$
+Pulling out constants from the integrand gives
+$$\left(\frac{1}{\sigma^4}\right)\left(\frac{1}{2}\right)\int_\mathbb{R} \exp\left(-\frac{1}{2\sigma^2}(x-\mu)^2\right)(x-\mu)^2 \ dx = \frac{\sqrt{2\pi}}{2\sigma}$$
+We multiply both sides by $\sigma^3$ and simplify:
+$$\frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb{R} \exp\left(-\frac{1}{2\sigma^2}(x-\mu)^2\right)(x-\mu)^2 \ dx = \sigma^2$$
+
+Which is precisely to say that $\mathbb{E}[(x-\mu)^2] = \sigma^2$.
+
+To get the second moment of the gaussian $\mathbb{E}[x^2]$, we can expand the variance:
+
+\begin{align*}
+	\mathbb{E}[(x-\mu)^2] &= \mathbb{E}[x^2 -2x\mu + \mu^2] &\\
+	&=\mathbb{E}[x^2] - 2\mu\mathbb{E}[x] + \mu^2 &\\
+	&= \mathbb{E}[x^2] - \mu^2 &\\
+\implies \sigma^2 + \mu^2 &= \mathbb{E}[x^2]
+\end{align*}
+
 
 \end{enumerate}
 
